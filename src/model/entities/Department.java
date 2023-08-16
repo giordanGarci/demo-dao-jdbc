@@ -1,14 +1,17 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class Department implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private int id;
-
+	
+	List<Seller> list;
+	
 	public Department(String name, int id) {
 		this.name = name;
 		this.id = id;
