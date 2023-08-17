@@ -25,6 +25,9 @@ public class Seller implements Serializable {
 		this.department = department;
 	}
 
+	public Seller() {
+	}
+
 	@Override
 	public String toString() {
 		return "Seller [id=" + id + ", name=" + name + ", email=" + email + ", birthDate=" + birthDate + ", baseSalary="

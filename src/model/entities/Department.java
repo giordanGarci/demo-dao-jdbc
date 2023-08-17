@@ -12,6 +12,9 @@ public class Department implements Serializable {
 	
 	List<Seller> list;
 	
+	public Department() {
+	}
+	
 	public Department(String name, int id) {
 		this.name = name;
 		this.id = id;
