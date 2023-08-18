@@ -8,14 +8,14 @@ public class Department implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private int id;
+	private Integer id;
 	
 	List<Seller> list;
 	
 	public Department() {
 	}
 	
-	public Department(String name, int id) {
+	public Department(String name, Integer id) {
 		this.name = name;
 		this.id = id;
 	}
