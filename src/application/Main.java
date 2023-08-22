@@ -2,7 +2,6 @@ package application;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +10,7 @@ import model.dao.DepartmentDao;
 import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
+import users.CreateSeller;
 import view.ConsoleView;
 
 public class Main {
@@ -51,7 +51,7 @@ public class Main {
 		switch (selection) {
 		
 		case 1:
-			Seller seller = Main.instantiateSeller();
+			Seller seller = CreateSeller.instantiateSeller(scan);
 			sellerDao.insert(seller);
 			System.out.println("Successfully inserted seller! new Id: " + seller.getId());
 			break;
@@ -139,10 +139,11 @@ public class Main {
 	private static void performDepartmentCRUD(int selection) {
 		switch (selection) {
 			case 1:
-				System.out.print("Department name: ");
+				scan.nextLine();
+				System.out.print("\nDepartment name: ");
 				Department dep = new Department(scan.nextLine(), null);
 				departmentDao.insert(dep);
-				System.out.println("Successfully inserted department!");
+				System.out.println("Successfully inserted department! Id: " + dep.getId());
 				break;
 			case 2:
 				System.out.print("Enter department id: ");
@@ -155,8 +156,8 @@ public class Main {
 				break;
 			case 3:
 				System.out.print("Enter department id: ");
-				sellerDao.deleteById(scan.nextInt());
-				scan.nextLine();
+				int id = scan.nextInt();
+				departmentDao.deleteById(id);
 				System.out.println("Successfully deleted department");
 				break;
 			case 4:
@@ -169,24 +170,6 @@ public class Main {
 				System.out.println(dep);
 				break;
 		}
-	}
-
-	private static Seller instantiateSeller() throws ParseException {
-		scan.nextLine();
-		System.out.println("\nEnter seller data: ");
-		System.out.print("Name: ");
-		String name = scan.nextLine();
-		System.out.print("Email: ");
-		String email = scan.nextLine();
-		System.out.print("Birth Date (dd/MM/yyyy): ");
-		Date date = sdf.parse(scan.nextLine());
-		System.out.print("Base Salary: ");
-		double baseSalary = scan.nextDouble();
-		System.out.println("Enter department id: ");
-		Department dep = new Department(null, scan.nextInt());
-		Seller seller = new Seller(null, name, email, date, baseSalary, dep);
-		
-		return seller;
 	}
 
 }

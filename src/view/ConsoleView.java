@@ -2,10 +2,6 @@ package view;
 
 import java.util.Scanner;
 
-import model.dao.DaoFactory;
-import model.dao.DepartmentDao;
-import model.dao.SellerDao;
-
 public class ConsoleView {
 		Scanner scan;
 		
@@ -51,5 +47,5 @@ public class ConsoleView {
 		public void closeScanner() {
 			scan.close();
 		}
-
+		
 }
