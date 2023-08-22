@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import model.dao.DaoFactory;
+import model.dao.DepartmentDao;
+import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 import view.ConsoleView;
@@ -13,11 +16,12 @@ import view.ConsoleView;
 public class Main {
 	static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	static Scanner scan = new Scanner(System.in);
+	private static DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
+	private static SellerDao sellerDao = DaoFactory.createSellerDao();
 
 	public static void main(String[] args) throws ParseException {
 
 		ConsoleView consoleView = new ConsoleView();
-
 		boolean exit = false;
 
 		do {
@@ -25,11 +29,11 @@ public class Main {
 			switch (choice) {
 				case 1:
 					int manipulateChoiceSeller = consoleView.showManipulateSellers();
-					Main.performSellerCRUD(manipulateChoiceSeller, consoleView);
+					Main.performSellerCRUD(manipulateChoiceSeller);
 					break;
 				case 2:
 					int manipulateChoiceDepartment = consoleView.showManipulateDeparment();
-					Main.performDepartmentCRUD(manipulateChoiceDepartment, consoleView);
+					Main.performDepartmentCRUD(manipulateChoiceDepartment);
 					break;
 				case 3:
 					exit = true;
@@ -42,20 +46,20 @@ public class Main {
 
 	}
 
-	private static void performSellerCRUD(int selection, ConsoleView consoleView) throws ParseException {
+	private static void performSellerCRUD(int selection) throws ParseException {
 
 		switch (selection) {
 		
 		case 1:
 			Seller seller = Main.instantiateSeller();
-			consoleView.getSellerDao().insert(seller);
+			sellerDao.insert(seller);
 			System.out.println("Successfully inserted seller! new Id: " + seller.getId());
 			break;
 			
 		case 2:
 			System.out.print("\nEnter seller id: \n");
 			int id = scan.nextInt();
-			seller = consoleView.getSellerDao().findById(id);
+			seller = sellerDao.findById(id);
 			System.out.println("1 - Name.");
 			System.out.println("2 - Email.");
 			System.out.println("3 - Base salary.");
@@ -99,25 +103,25 @@ public class Main {
 					break;
 			}
 			
-			consoleView.getSellerDao().update(seller);
+			sellerDao.update(seller);
 			break;
 			
 		case 3:
 			System.out.print("Enter seller id: ");
 			id = scan.nextInt();
-			consoleView.getSellerDao().deleteById(id);
+			sellerDao.deleteById(id);
 			System.out.println("Successfully deleted seller!");
 			break;
 			
 		case 4:
 			System.out.print("Enter seller id: ");
 			id = scan.nextInt();
-			Seller sellerFound = consoleView.getSellerDao().findById(id);
+			Seller sellerFound = sellerDao.findById(id);
 			System.out.println(sellerFound);
 			break;
 			
 		case 5:
-			List<Seller> list = consoleView.getSellerDao().findAll();
+			List<Seller> list = sellerDao.findAll();
 			list.stream().forEach(e -> System.out.println(e));
 			System.out.println();
 			break;
@@ -125,43 +129,43 @@ public class Main {
 		case 6:
 			System.out.println("\nEnter department id: ");
 			Department dep = new Department(null, scan.nextInt());
-			List<Seller> list2 = consoleView.getSellerDao().findByDepartment(dep);
+			List<Seller> list2 = sellerDao.findByDepartment(dep);
 			list2.stream().forEach(e -> System.out.println(e));
 			break;
 			
 		}
 	}
 	
-	private static void performDepartmentCRUD(int selection, ConsoleView consoleView) {
+	private static void performDepartmentCRUD(int selection) {
 		switch (selection) {
 			case 1:
 				System.out.print("Department name: ");
 				Department dep = new Department(scan.nextLine(), null);
-				consoleView.getDepartmentDao().insert(dep);
+				departmentDao.insert(dep);
 				System.out.println("Successfully inserted department!");
 				break;
 			case 2:
 				System.out.print("Enter department id: ");
-				dep = consoleView.getDepartmentDao().findById(scan.nextInt());
+				dep = departmentDao.findById(scan.nextInt());
 				scan.nextLine();
 				System.out.print("Enter the new department name: ");
 				dep.setName(scan.nextLine());
-				consoleView.getDepartmentDao().update(dep);
+				departmentDao.update(dep);
 				System.out.println("Successfully updated department");
 				break;
 			case 3:
 				System.out.print("Enter department id: ");
-				consoleView.getDepartmentDao().deleteById(scan.nextInt());
+				sellerDao.deleteById(scan.nextInt());
 				scan.nextLine();
 				System.out.println("Successfully deleted department");
 				break;
 			case 4:
-				List<Department> list = consoleView.getDepartmentDao().findAll();
+				List<Department> list = departmentDao.findAll();
 				list.stream().forEach(e -> System.out.println(e));
 				break;
 			case 5:
 				System.out.print("Enter department id: ");
-				dep = consoleView.getDepartmentDao().findById(scan.nextInt());
+				dep = departmentDao.findById(scan.nextInt());
 				System.out.println(dep);
 				break;
 		}

@@ -8,13 +8,9 @@ import model.dao.SellerDao;
 
 public class ConsoleView {
 		Scanner scan;
-		SellerDao sellerDao;
-		DepartmentDao departmentDao;
 		
 		public ConsoleView() {
 			scan = new Scanner(System.in);
-			sellerDao = DaoFactory.createSellerDao();
-			departmentDao = DaoFactory.createDepartmentDao();
 		}
 		
 		public int showMenu() {
@@ -56,19 +52,4 @@ public class ConsoleView {
 			scan.close();
 		}
 
-		public SellerDao getSellerDao() {
-			return sellerDao;
-		}
-
-		public void setSellerDao(SellerDao sellerDao) {
-			this.sellerDao = sellerDao;
-		}
-
-		public DepartmentDao getDepartmentDao() {
-			return departmentDao;
-		}
-
-		public void setDepartmentDao(DepartmentDao departmentDao) {
-			this.departmentDao = departmentDao;
-		}
 }
